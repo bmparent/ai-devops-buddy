@@ -1,0 +1,26 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pytest
+      - name: Run tests
+        run: pytest -q
+      - name: Secret scan
+        uses: gitleaks/gitleaks-action@v2
+      - name: Policy check
+        run: echo "OPA policy check placeholder"
+      - name: Upload artifact
+        run: echo "Upload placeholder"
+      - name: Label PR
+        if: github.event_name == 'pull_request'
+        uses: actions/labeler@v4
