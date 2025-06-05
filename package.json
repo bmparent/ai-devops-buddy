@@ -1,0 +1,12 @@
+{
+  "name": "ai-devops-buddy",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "eslint \"src/**/*.{js,ts}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0"
+  }
+}
