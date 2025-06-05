@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pytest
+pytest-cov
+mypy
+bandit
+pip-audit
+openai
