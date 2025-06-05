@@ -1,0 +1,33 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Python deps
+        run: |
+          pip install black ruff mypy pytest
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install Node deps
+        run: |
+          npm install
+      - name: Black
+        run: black --check .
+      - name: Ruff
+        run: ruff .
+      - name: Mypy
+        run: mypy --strict
+      - name: ESLint
+        run: npm run lint
+      - name: TypeScript
+        run: npm run typecheck
+      - name: Pytest
+        run: pytest
