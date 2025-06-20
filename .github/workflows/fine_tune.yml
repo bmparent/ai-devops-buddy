@@ -1,0 +1,22 @@
+name: nightly-finetune
+on:
+  schedule:
+    - cron: '0 3 * * *'
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: run
+        run: |
+          python trainer/nightly_finetune.py > finetune.log
+          cat finetune.log
+      - name: upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: fine-tune-history
+          path: logs/fine_tune_history.csv

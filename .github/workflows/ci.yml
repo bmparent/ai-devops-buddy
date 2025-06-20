@@ -1,0 +1,25 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: pip install black ruff mypy pytest
+      - run: npm install --prefix frontend
+      - run: black --check .
+      - run: ruff check .
+      - run: mypy --strict .
+      - run: pytest -q
+      - run: |
+          cd frontend
+          npx eslint "src/**/*.{ts,tsx}"
+          npx tsc --noEmit
+          npm test
+
